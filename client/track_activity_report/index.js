@@ -9,6 +9,7 @@
  */
 
 import * as directive from './directives';
+import 'highcharts'
 
 
 /**
@@ -22,7 +23,8 @@ angular.module('superdesk.analytics.track-activity-report', [])
     .directive('sdTrackActivityReportContainer', directive.TrackActivityReportContainer)
     .directive('sdTrackActivityReportPanel', directive.TrackActivityReportPanel)
     .directive('sdTrackActivityReportView', directive.TrackActivityReportView)
-
+ 
+ 
     .config(['superdeskProvider', function(superdesk) {
         superdesk.activity('track-activity-report', {
             label: gettext('Track Activity Report'),
