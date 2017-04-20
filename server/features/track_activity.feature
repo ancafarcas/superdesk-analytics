@@ -22,6 +22,7 @@ Feature: Track Activity
         When we post to "/track_activity_report"
         """
         {
+        	"days_ago": 2,
         	"user": "#CONTEXT_USER_ID#",
         	"desk": "#desks._id#",
         	"stage": "#desks.incoming_stage#"
@@ -30,6 +31,7 @@ Feature: Track Activity
         Then we get existing resource
         """
         {
+        "days_ago": 2,
         "user": "#CONTEXT_USER_ID#",
         "report": [{
         	"entered_stage_at": "#archive._updated#",
@@ -63,6 +65,7 @@ Feature: Track Activity
 		When we post to "/track_activity_report"
         """
         {
+        	"days_ago": 3,
         	"user": "#CONTEXT_USER_ID#",
         	"desk": "#desks._id#",
         	"stage": "#stages._id#"
@@ -71,6 +74,7 @@ Feature: Track Activity
         Then we get existing resource
         """
         {
+        "days_ago":3,
         "user": "#CONTEXT_USER_ID#",
         "report": [{
         	"entered_stage_at": "#archive._updated#",

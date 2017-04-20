@@ -12,6 +12,11 @@ function Analytics() {
     this.reportName = element(by.id('activity_report_name'));
     this.reportDescription = element(by.id('activity_report_description'));
     this.reportGlobal = element(by.id('activity_report_global'));
+    this.reportStartTime = element(by.id('days-ago'));
+    this.reportUser = element(by.model('trackActivityReport.user'));
+    this.reportStage = element(by.model('trackActivityReport.stage'));
+    this.reportProcessedItemsStartTime = element(by.id('start_time   '));
+    this.reportProcessedItemsEndTime = element(by.id('end_time'));
 
     /** List of activity reports **/
     this.userReports = element.all(by.repeater('activityReport in userSavedActivityReports'));
@@ -71,6 +76,18 @@ function Analytics() {
 
     this.setOperationDateEnd = function(dateString) {
         this.reportOperationDateEnd.element(by.tagName('input')).sendKeys(dateString);
+    };
+
+    /**
+     * Set the operation date for processed items report
+     * @param {string} date_string - the date formatted to string
+     **/
+    this.setOperationProcessedItemsTimeStart = function(dateString) {
+        this.reportProcessedItemsStartTime.element(by.tagName('input')).sendKeys(dateString);
+    };
+
+    this.setOperationProcessedItemsTimeEnd = function(dateString) {
+        this.reportProcessedItemsStartEnd.element(by.tagName('input')).sendKeys(dateString);
     };
 
     /**
@@ -182,6 +199,32 @@ function Analytics() {
     };
 
     /**
+     * Set the track activity report starting time(how many days ago an item was started)
+     * @param {int} startTime - the report startTime
+     **/
+    this.setStartingTime = function(startTime) {
+        var startTimeElement = element(by.id('days-ago'));
+
+        startTimeElement.click();
+    };
+
+    /**
+     * Set the stage
+     * @param {string} stage - the stage name
+     **/
+    this.setStage = function(stage) {
+        this.reportStage.element(by.cssContainingText('option', stage)).click();
+    };
+
+    /**
+     * Set the user
+     * @param {string} user - the user name
+     **/
+    this.setUser = function(username) {
+        this.reportUser.element(by.cssContainingText('option', user)).click();
+    };
+
+    /**
      * Set the group by desk
      **/
     this.toggleGlobal = function() {
@@ -262,6 +305,17 @@ function Analytics() {
     };
 
     /**
+     * Returns the operation date for processed items report
+     **/
+    this.getOperationProcessedItemsTimeStart = function() {
+        return this.reportProcessedItemsStartTime.element(by.tagName('input'));
+    };
+
+    this.getOperationProcessedItemsTimeEnd = function() {
+        return this.reportProcessedItemsEndTime.element(by.tagName('input'));
+    }
+
+    /**
      * Return the group by desk toggle of the report currently in edit mode
      **/
     this.getReportGroupByDesk = function() {
@@ -292,7 +346,7 @@ function Analytics() {
     };
 
     /**
-     * Return the desk of the report currently in edit mode
+     * Return the subject of the report currently in edit mode
      **/
     this.getSubject = function() {
         return element(by.id('[data-field="parameters-subject"]'))
@@ -305,5 +359,27 @@ function Analytics() {
      **/
     this.getReportGlobal = function() {
         return this.reportGlobal;
+    };
+
+    this.getReportStartTime = function() {
+        this.reportStartTime;
+    }
+
+    /**
+     * Return the stage of the track activity report
+     **/
+    this.getReportStage = function() {
+        return this.reportStage.all(by.tagName('option'))
+            .filter((elem, index) => elem.getAttribute('selected')
+                .then((selected) => selected === 'true')).first();
+    };
+
+    /**
+     * Return the user of the track activity report
+     **/
+    this.getUser = function() {
+        return this.reportUser.all(by.tagName('option'))
+            .filter((elem, index) => elem.getAttribute('selected')
+                .then((selected) => selected === 'true')).first();
     };
 }

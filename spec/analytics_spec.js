@@ -86,4 +86,26 @@ describe('analytics', () => {
         analytics.switchToGrouping();
         expect(analytics.getReportGroupByDesk().getAttribute('checked')).toBeTruthy();
     });
+
+    it('manage track activity reports', () => {
+        analytics.setStartingTime('2');
+        analytics.setDesk('Sports');
+        analytics.setStage('Working stage');
+        analytics.setUser('testUser');
+        browser.sleep(100);
+        expect(analytics.getReportStartTime().getAttribute('value')).toEqual('2');
+        expect(analytics.getReportDesk().getText()).toContain('Sports');
+        expect(analytics.getReportStage().getText()).toContain('Working');
+        expect(analytics.getUser().getText()).toContain('testUser');
+    });
+
+    it('manage processed items reports', () => {
+        analytics.setOperationProcessedItemsTimeStart('13/04/2017');
+        analytics.setOperationProcessedItemsTimeEnd('19/04/2017');
+        analytics.setUser('testUser');
+        browser.sleep(100);
+        expect(analytics.getOperationProcessedItemsTimeStart().getAttribute('value')).toEqual('13/04/2017');
+        expect(analytics.getOperationProcessedItemsTimeEnd().getAttribute('value')).toEqual('19/04/2017');
+        expect(analytics.getUser().getText()).toContain('testUser');
+    });
 });
